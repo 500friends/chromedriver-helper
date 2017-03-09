@@ -36,7 +36,7 @@ module Chromedriver
     end
 
     def download_url
-      GoogleCodeParser.new(platform).newest_download
+      GoogleCodeParser.new(platform).penultimate_download
     end
 
     def binary_path

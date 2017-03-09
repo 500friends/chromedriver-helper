@@ -20,8 +20,16 @@ module Chromedriver
         items.map {|k| "#{BUCKET_URL}/#{k}"}
       end
 
+      def latest_downloads
+        (downloads.sort { |a, b| version_of(a) <=> version_of(b)})
+      end
+
+      def penultimate_download
+        latest_downloads.last(2).first
+      end
+
       def newest_download
-        (downloads.sort { |a, b| version_of(a) <=> version_of(b)}).last
+        latest_downloads.last
       end
 
       private
