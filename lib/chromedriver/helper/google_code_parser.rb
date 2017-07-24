@@ -15,17 +15,18 @@ module Chromedriver
 
       def downloads
         doc = Nokogiri::XML.parse(source)
-        items = doc.css("Contents Key").collect {|k| k.text }
-        items.reject! {|k| !(/chromedriver_#{platform}/===k) }
-        items.map {|k| "#{BUCKET_URL}/#{k}"}
+        items = doc.css("Contents Key").collect { |k| k.text }
+        items.reject! { |k| !(/chromedriver_#{platform}/===k) }
+        items.map! { |k| "#{BUCKET_URL}/#{k}" }
+        items
       end
 
       def latest_downloads
-        (downloads.sort { |a, b| version_of(a) <=> version_of(b)})
+        downloads.sort { |a, b| version_of(a) <=> version_of(b) }
       end
 
       def penultimate_download
-        latest_downloads.last(2).first
+        latest_downloads.detect { |chrome_url| chrome_url.include?('2.29') }
       end
 
       def newest_download
