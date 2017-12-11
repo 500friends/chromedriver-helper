@@ -26,7 +26,7 @@ module Chromedriver
       end
 
       def penultimate_download
-        latest_downloads.detect { |chrome_url| chrome_url.include?('2.29') }
+        latest_downloads.detect { |chrome_url| chrome_url.include?(penultimate_version) }
       end
 
       def newest_download
@@ -34,6 +34,10 @@ module Chromedriver
       end
 
       private
+
+      def penultimate_version
+        ENV['CHROME_DRIVER_VERSION'] || '2.32'
+      end
 
       def version_of url
         Gem::Version.new grab_version_string_from(url)
